@@ -66,7 +66,7 @@ void compile_source(){
   system(buf);
   ifstream tmp("test.exe");
   if(!tmp){
-    cout << "Fail:temp.exe not exist! Abort" << endl;
+    cout << "Fail:test.exe not exist! Abort" << endl;
     exit(0);
   }else{
     cout << "OK!" << endl;
@@ -97,7 +97,7 @@ void judge(){
     if(r)
       printf("Runtime Error on test %d\n", i);
     else{
-      int usetime = (int)((ed-st)/config.timerfrq);
+      double usetime = (ed-st)/config.timerfrq;
       if(usetime > config.time)
         printf("Time Limit Exceed on test %d", i);
       else{
@@ -107,15 +107,13 @@ void judge(){
         else
           printf("Wrong Answer on test %d", i);
       }
-      printf(" ... Time: %d ms\n", usetime);
+      printf(" ... Time: %.2lf ms\n", usetime);
     }
   }
 }
 int main(int argc, char *argv[]){
   set_config();
-  if(argc > 1 && strcmp(argv[1], "--only-compare"))
-    compile_source();
-  else puts("Only Compare:");
+  compile_source();
   judge();
   return 0;
 }
