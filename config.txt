@@ -1,8 +1,9 @@
-<source D:/taolu/cogsearthquake.cpp>
-<compiler g++ %s -O2 -o test.exe> 
-<points 10>
-<input equake%d.in>
-<output equake%d.out>
-<answer equake%d.ans>
-<time 4000>
-<spj fc %s %s /W > fclog.txt>
+<source D:/taolu/wll24_zck.cpp>
+<input interv%d.in>
+<answer interv%d.out>
+<startid 0>
+<points 11>
+<compiler g++ %s -O2 -o test.exe -lm>
+<output output%d.txt>
+<time 2000>
+<spj diff %s %s -w > fclog.txt>
