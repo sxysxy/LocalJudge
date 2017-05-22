@@ -14,7 +14,7 @@ using namespace std;
 struct{
   string source, input, output, answer, spj;
   string compiler;
-  int time, points;
+  int time, startid, points;
   double timerfrq;
 }config;
 void set_config(){
@@ -49,8 +49,11 @@ void set_config(){
       config.spj = s.substr(p+4, s.length()-(p+3+2));
       cout << "Judge Command: " << config.spj << endl;
     }else if((p = s.find("compiler")) != string::npos){
-      config.compiler = s.substr(p+9, s.length()-(p+9+2));
+      config.compiler = s.substr(p+9, s.length()-(p+8+2));
       cout << "Compile Command: " << config.compiler << endl;
+    }else if((p = s.find("startid")) != string::npos){
+      sscanf(s.substr(p+7, s.length()-(p+6+2)).c_str(), "%d", &config.startid);
+      cout << "Test points from: " << config.startid << endl;
     }else if((p = s.find("points")) != string::npos){
       sscanf(s.substr(p+6, s.length()-(p+5+2)).c_str(), "%d", &config.points);
       cout << "Test points: " << config.points << endl;
@@ -81,7 +84,7 @@ void init_timer(){
 void judge(){
   char buf[TMP_BUF_SIZE];
   init_timer();
-  for(int i = 1; i <= config.points; i++){
+  for(int i = config.startid; i < config.startid+config.points; i++){
     sprintf(buf, config.input.c_str(), i);
     string ifn(buf);
     sprintf(buf, config.output.c_str(), i);
@@ -115,5 +118,11 @@ int main(int argc, char *argv[]){
   set_config();
   compile_source();
   judge();
+  ifstream tmp("test.exe");
+  if(tmp){
+    tmp.close();
+    system("del test.exe");
+  }
+  system("pause");
   return 0;
 }
